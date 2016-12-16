@@ -1,0 +1,37 @@
+user
+    id_user				INT | Primary Key | Auto Increment
+    username (nim)			VARCHAR(16)
+    password		  		VARCHAR(16)
+    nama_lengkap	       		VARCHAR(50)
+
+admin
+    id_admin				INT | Primary Key | Auto Increment
+    username (admin)			VARCHAR(16)
+    password		  		VARCHAR(16)
+
+makul
+    id_makul				INT | Primary Key | Auto Increment
+    kode makul     			VARCHAR(10)
+    nama_makul				VARCHAR(50)
+    tipe_makul (0-wajib, 1-pilihan)	BOOLEAN
+    semester				INT(1)
+    deskripsi_makul			TEXT
+    prasyarat				VARCHAR(25) | Null
+    sks					INT(1)
+    teori				INT(1)
+    praktikum				INT(1)
+    diperbarui				DATETIME | Current Timestamp
+
+review
+    id_review				INT | Primary Key | Auto Increment
+    id_user				INT(11)
+    id_makul				INT(11)
+    isi_review				TEXT
+    status (0-tunggu, 1-terima)		BOOLEAN
+    tanggal (update saat terima)	DATETIME | Current Timestamp
+    membantu				INT(4)
+    tidak_membantu			INT(4)
+
+ambil_makul
+    id_user (foreign)			INT(11)
+    id_makul (foreign)			INT(11)

@@ -1,0 +1,79 @@
+PSEUDOCODE
+
+start session
+show_menu {
+    Home
+        on_click 
+            redirect_page Halaman Utama
+    Daftar Mata Kuliah
+        on_click
+            show_menu {
+                Semua Mata Kuliah
+                    on_click {
+                        redirect_page Semua Mata Kuliah
+                        for i=1 until i=8
+                            show_table Mata Kuliah Wajib Semester(i)
+                        for i=3 until i=7
+                            show_table Mata Kuliah Pilihan Semester(i)
+                    }
+                Mata Kuliah Wajib
+                    on_click {
+                        redirect_page Mata Kuliah Wajib
+                        for i=1 until i=8
+                            show_items Mata Kuliah Semester(i)
+                                on_click Lihat detail
+                                    redirect_page Makul(id)
+                    }
+                Mata Kuliah Pilihan
+                    on_click {
+                        redirect_page Mata Kuliah Pilihan
+                        for i=3 until i=7
+                            show_items Mata Kuliah Semester(i)
+                                on_click Lihat detail
+                                    redirect_page Makul(id)
+                    }
+            }
+    Mata Kuliah Terupdate
+        show_items Mata Kuliah
+            on_click Lihat detail
+                redirect_page Makul(id)
+}
+if is_set session_admin {
+    nama <- Admin
+    hide_menu Daftar Mata Kuliah
+    show_menu {
+        Daftar Request
+            show_table Daftar Request
+        Logout
+            on_click {
+                destroy_session
+                redirect_page Halaman Utama
+            }
+    }
+}elseif is_set session_user {
+    nama <- Nama User
+    show_menu {
+        Daftar Review
+            show_table Daftar Review
+        Logout
+            on_click {
+                destroy_session
+                redirect_page Halaman Utama
+            }
+    }
+}else {
+    show_menu Login
+        on_click
+            redirect_page Login {
+                show_forms {
+                    username
+                    password
+                }
+                show_button Masuk {
+                    on_click { 
+                        check(username, password)
+                        redirect_page Halaman Utama
+                    }
+                }
+            }
+}
