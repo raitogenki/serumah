@@ -21,8 +21,8 @@
       <section class="content">
         <?php
             require 'control/database.php';
-            $colors = array('dd4b39', 'f39c12', '00c0ef', '0073b7', '3c8dbc', '00a65a', '001f3f', '39cccc', '3d9970',
-                '01ff70', 'ff851b', 'f012be', '605ca8', 'd81b60', '111111');
+            $colors = array('bg-red', 'bg-yellow', 'bg-aqua', 'bg-blue', 'bg-light-blue', 'bg-green', 'bg-navy', 'bg-teal',
+                'bg-olive', 'bg-lime', 'bg-orange', 'bg-fuchsia', 'bg-purple', 'bg-maroon', 'bg-black');
             $query = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$id'");
             while($makul = $query->fetch_object()){		 
                 echo '
@@ -31,11 +31,9 @@
                             <h3 class="box-title">Informasi Mata Kuliah</h3>
                         </div>
                         <div class="box-body">
-                            <div class="carousel">
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img src="https://placeholdit.imgix.net/~text?txtsize=72&bg='.$colors[array_rand($colors)].'&txtclr=ffffff&txt='.$makul->nama_makul.'&w=1366&h=240&txttrack=0">
-                                    </div>
+                            <div class="col-lg-12 col-xs-12 '.$colors[array_rand($colors)].'" style="display:table; height:200px;">
+                                <div style="display:table-cell; text-align:center; vertical-align:middle;">
+                                    <h1>'.$makul->nama_makul.'</h1>
                                 </div>
                             </div>
                             &nbsp;
