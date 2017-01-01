@@ -1,9 +1,9 @@
 <?php 
     session_start();
-    if(!isset($_GET["idmakul"])){
-        header("Location: index.php");
+    if(!isset($_GET['idmakul'])){
+        header('Location: index.php');
     }else{
-        $id = $_GET["idmakul"];
+        $id_makul = $_GET['idmakul'];
     }
 ?>
 
@@ -23,17 +23,17 @@
             require 'control/database.php';
             $colors = array('bg-red', 'bg-yellow', 'bg-aqua', 'bg-blue', 'bg-light-blue', 'bg-green', 'bg-navy', 'bg-teal',
                 'bg-olive', 'bg-lime', 'bg-orange', 'bg-fuchsia', 'bg-purple', 'bg-maroon', 'bg-black');
-            $query = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$id'");
-            while($makul = $query->fetch_object()){		 
+            $query_makul = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$id_makul'");
+            while($makul = $query_makul->fetch_object()){		 
                 echo '
                     <div class="box box-solid">
                         <div class="box-header with-border">
                             <h3 class="box-title">Informasi Mata Kuliah</h3>
                         </div>
                         <div class="box-body">
-                            <div class="col-lg-12 col-xs-12 '.$colors[array_rand($colors)].'" style="display:table; height:200px;">
+                            <div class="col-lg-12 col-xs-12 '.$colors[array_rand($colors)].'" style="display:table; height:240px;">
                                 <div style="display:table-cell; text-align:center; vertical-align:middle;">
-                                    <h1>'.$makul->nama_makul.'</h1>
+                                    <h1 style="font-size:72px">'.strtoupper($makul->nama_makul).'</h1>
                                 </div>
                             </div>
                             &nbsp;
@@ -45,11 +45,9 @@
                             <h3 class="box-title">Review</h3>
                 ';
                 if(isset($_SESSION['user'])){
-                    $username = $_SESSION['user'];
-                    $query = mysqli_query($mysqli, "SELECT * FROM `user` WHERE username='$username'");
-                    $user = $query->fetch_object();
-                    $query = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_makul='$id' AND id_user='$user->id_user'");
-                    if(mysqli_num_rows($query) == 0){
+                    $id_user = $_SESSION['iduser'];
+                    $query_cekreview = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_makul='$id_makul' AND id_user='$id_user'");
+                    if(mysqli_num_rows($query_cekreview) == 0){
                         echo '
                             <div class="pull-right box-tools">
                                 <a href="#tambah" class="btn btn-primary btn-sm" data-toggle="modal"><i class="fa fa-plus"></i> Tambah Review</a>
@@ -57,22 +55,22 @@
                             <div class="modal fade" id="tambah">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" style="text-align:center">Tambah Review</h4>
-                                            <h4 style="text-align:center">'.$makul->nama_makul.'</h4>
-                                            <h5 style="text-align:center">oleh '.$user->nama_lengkap.'</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form role="form">
+                                        <form role="form" action="control/kelolareview.php" method="post">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" style="text-align:center">Tambah Review</h4>
+                                                <h4 style="text-align:center">'.$makul->nama_makul.'</h4>
+                                            </div>
+                                            <div class="modal-body">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" rows="7" placeholder="Tulis review ..."></textarea>
+                                                    <input type="hidden" name="idmakul" value="'.$id_makul.'">
+                                                    <textarea type="text" name="isireview" class="form-control" rows="14" placeholder="Tulis review ..."></textarea>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Request Review</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+                                                <button type="submit" name="tambah" class="btn btn-primary">Request Review</button>
+                                            </div>
+                                        </form>
                                     </div>	
                                 </div>
                             </div>
@@ -81,11 +79,10 @@
                 }
                 echo '
                     </div>
-                    <div class="box-body">
-                        
+                    <div class="box-body">                      
                 ';
-                $query = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_makul='$id' AND status='1' ORDER BY tanggal DESC");
-                if(mysqli_num_rows($query) == 0){
+                $query_review = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_makul='$id_makul' AND status='1' ORDER BY tanggal DESC");
+                if(mysqli_num_rows($query_review) == 0){
                     echo '<p>Belum ada review</p>';
                 }
                 else{
@@ -97,9 +94,9 @@
                                 <th>Opsi</th>
                             </tr>
                     ';
-                    while($review = $query->fetch_object()){
-                        $query = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
-                        $user = $query->fetch_object();
+                    while($review = $query_review->fetch_object()){
+                        $query_pereview = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
+                        $user = $query_pereview->fetch_object();
                         echo '
                             <tr>
                                 <td>'.$user->nama_lengkap.'</td>

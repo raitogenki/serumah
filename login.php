@@ -2,7 +2,6 @@
 
 <head>
     <?php require_once 'layout/head.php'; ?>
-    <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
     <style>
         .login-page {
             background-image: url("dist/img/symphony.png");
@@ -21,16 +20,16 @@
             <p class="login-box-msg">Masukkan username dan password anda</p>
             <form action="control/ceklogin.php" method="post">
                 <div class="form-group has-feedback">
-                    <input name="username" type="text" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input name="password" type="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
+                        <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Masuk</button>
                     </div>
                 </div>
             </form>

@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
-    if(!isset($_SESSION["admin"])){
-		header("Location: login.php");
+    if(!isset($_SESSION['admin'])){
+		header('Location: login.php');
 	}
 ?>
 
@@ -24,8 +24,8 @@
                 <div class="box-body">
                     <?php
                         require 'control/database.php';
-                        $query = mysqli_query($mysqli, "SELECT * FROM `review` WHERE status='0' ORDER BY tanggal ASC");
-                        if(mysqli_num_rows($query) == 0){
+                        $query_review = mysqli_query($mysqli, "SELECT * FROM `review` WHERE status='0' ORDER BY tanggal ASC");
+                        if(mysqli_num_rows($query_review) == 0){
                             echo '<p>Tidak ada request</p>';
                         }else{
                             echo'
@@ -37,26 +37,28 @@
                                         <th>Opsi</th>
                                     </tr>
                             ';
-                            while($review = $query->fetch_object()){		               
+                            while($review = $query_review->fetch_object()){
+                                $id_review = $review->id_review;
+                                $id_makul = $review->id_makul;		               
                                 echo '
                                     <tr>
                                         <td>'.$review->tanggal.'</td>
                                 ';
-                                $query = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
-                                if($user = $query->fetch_object()){
+                                $query_pereview = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
+                                if($user = $query_pereview->fetch_object()){
                                     echo '<td>'.$user->username.'</td>';
                                 }
-                                $query = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$review->id_makul'");
-                                if($makul = $query->fetch_object()){
+                                $query_makul = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$id_makul'");
+                                if($makul = $query_makul->fetch_object()){
                                     echo '<td>'.$makul->nama_makul.'</td>';
                                 }
                                 echo '
                                         <td>
-                                            <a href="#lihat" class="btn btn-info btn-sm" data-toggle="modal" title="Lihat"><i class="fa fa-eye"> </i></a>
-                                            <a href="" class="btn btn-success btn-sm" title="Terima"><i class="fa fa-check"> </i></a>
-                                            <a href="" class="btn btn-danger btn-sm" title="Tolak"><i class="fa fa-close"> </i></a>
+                                            <a href="#lihat'.$id_review.'" class="btn btn-info btn-sm" data-toggle="modal" title="Lihat"><i class="fa fa-eye"> </i></a>
+                                            <a href="control/kelolarequest.php?opsi=terima&idreview='.$id_review.'&idmakul='.$id_makul.'" class="btn btn-success btn-sm" title="Terima"><i class="fa fa-check"> </i></a>
+                                            <a href="control/kelolarequest.php?opsi=tolak&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Tolak"><i class="fa fa-close"> </i></a>
 
-                                            <div class="modal fade" id="lihat">
+                                            <div class="modal fade" id="lihat'.$id_review.'">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -65,7 +67,7 @@
                                                             <h5 style="text-align:center">oleh '.$user->username.'</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h5>'.$review->isi_review.'</h5>
+                                                            <h5>'; echo nl2br($review->isi_review); echo '</h5>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
