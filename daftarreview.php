@@ -26,15 +26,16 @@
                 <div class="box-body">
                     <?php
                         require 'control/database.php';          
-                        $query_review = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_user='$id_user' AND status='1' ORDER BY tanggal DESC");
+                        $query_review = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_user='$id_user' ORDER BY tanggal DESC");
                         if(mysqli_num_rows($query_review) == 0){
                             echo '<p>Tidak ada review</p>';
                         }else{
                             echo '
                                 <table class="table table-hover">
                                     <tr>
-                                        <th>Tanggal Diterima</th>
+                                        <th>Tanggal</th>
                                         <th>Mata Kuliah</th>
+                                        <th>Status</th>
                                         <th>Membantu</th>
                                         <th>Tidak Membantu</th>
                                         <th>Opsi</th>
@@ -44,13 +45,16 @@
                                 $id_review = $review->id_review;	               
                                 echo '
                                     <tr>
-                                        <td>'.$review->tanggal.'</td>
+                                        <td>'; echo date("d-m-Y", strtotime($review->tanggal)); echo '</td>
                                 ';
                                 $query_makul = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$review->id_makul'");
                                 if($makul = $query_makul->fetch_object()){
-                                    echo '
-                                        <td>'.$makul->nama_makul.'</td>
-                                    ';
+                                    echo '<td>'.$makul->nama_makul.'</td>';
+                                }
+                                if($review->status == 1){
+                                    echo '<td><a class="btn btn-success btn-sm">Diterima</a></td>';
+                                }else{
+                                    echo '<td><a class="btn btn-warning btn-sm">Menunggu</a></td>';
                                 }
                                 echo '
                                         <td>'.$review->membantu.'</td>
@@ -58,13 +62,13 @@
                                         <td>
                                             <a href="#lihat'.$id_review.'" class="btn btn-info btn-sm" data-toggle="modal" title="Lihat"><i class="fa fa-eye"> </i></a>
                                             <a href="#edit'.$id_review.'" class="btn btn-warning btn-sm" data-toggle="modal" title="Edit"><i class="fa fa-edit"> </i></a>
-                                            <a href="control/kelolareview.php?hapus=yes&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Hapus"><i class="fa fa-trash"> </i></a>
+                                            <a href="control/kelolareview.php?hapus=1&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Hapus"><i class="fa fa-trash"> </i></a>
 
                                             <div class="modal fade" id="lihat'.$id_review.'">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" style="text-align:center">Lihat Review</h4>
+                                                            <h4 class="modal-title" style="text-align:center">Review Mata Kuliah</h4>
                                                             <h4 style="text-align:center">'.$makul->nama_makul.'</h4>
                                                         </div>
                                                         <div class="modal-body">
@@ -82,7 +86,7 @@
                                                     <div class="modal-content">
                                                         <form role="form" action="control/kelolareview.php" method="post">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title" style="text-align:center">Edit Review</h4>
+                                                                <h4 class="modal-title" style="text-align:center">Edit Review Mata Kuliah</h4>
                                                                 <h4 style="text-align:center">'.$makul->nama_makul.'</h4>
                                                             </div>
                                                             <div class="modal-body">

@@ -31,7 +31,7 @@
                             echo'
                                 <table class="table table-hover">
                                     <tr>
-                                        <th>Tanggal Request</th>
+                                        <th>Tanggal</th>
                                         <th>Username</th>
                                         <th>Mata Kuliah</th>
                                         <th>Opsi</th>
@@ -42,7 +42,7 @@
                                 $id_makul = $review->id_makul;		               
                                 echo '
                                     <tr>
-                                        <td>'.$review->tanggal.'</td>
+                                        <td>'; echo date("d-m-Y", strtotime($review->tanggal)); echo '</td>
                                 ';
                                 $query_pereview = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
                                 if($user = $query_pereview->fetch_object()){
@@ -62,9 +62,9 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" style="text-align:center">Lihat Review</h4>
+                                                            <h4 class="modal-title" style="text-align:center">Review Mata Kuliah</h4>
                                                             <h4 style="text-align:center">'.$makul->nama_makul.'</h4>
-                                                            <h5 style="text-align:center">oleh '.$user->username.'</h4>
+                                                            <h5 style="text-align:center">oleh '.$user->username.'</h5>
                                                         </div>
                                                         <div class="modal-body">
                                                             <h5>'; echo nl2br($review->isi_review); echo '</h5>

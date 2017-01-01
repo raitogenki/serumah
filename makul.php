@@ -57,7 +57,7 @@
                                     <div class="modal-content">
                                         <form role="form" action="control/kelolareview.php" method="post">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" style="text-align:center">Tambah Review</h4>
+                                                <h4 class="modal-title" style="text-align:center">Tambah Review Mata Kuliah</h4>
                                                 <h4 style="text-align:center">'.$makul->nama_makul.'</h4>
                                             </div>
                                             <div class="modal-body">
@@ -83,32 +83,33 @@
                 ';
                 $query_review = mysqli_query($mysqli, "SELECT * FROM `review` WHERE id_makul='$id_makul' AND status='1' ORDER BY tanggal DESC");
                 if(mysqli_num_rows($query_review) == 0){
-                    echo '<p>Belum ada review</p>';
+                    echo '<p>Tidak ada review</p>';
                 }
                 else{
-                    echo '
-                        <table class="table table-hover">
-                            <tr>
-                                <th>Nama</th>
-                                <th>Review</th>
-                                <th>Opsi</th>
-                            </tr>
-                    ';
+                    echo '<ul class="timeline">';
                     while($review = $query_review->fetch_object()){
+                        $id_review = $review->id_review;
                         $query_pereview = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
                         $user = $query_pereview->fetch_object();
+                        $icolor = $colors[array_rand($colors)];
                         echo '
-                            <tr>
-                                <td>'.$user->nama_lengkap.'</td>
-                                <td>'.$review->isi_review.'</td>
-                                <td>
-                                    <a href="" class="btn btn-success btn-sm" title="Membantu"><i class="fa fa-thumbs-o-up"> </i></a>
-                                    <a href="" class="btn btn-danger btn-sm" title="Tidak Membantu"><i class="fa fa-thumbs-o-down"> </i></a>
-                                </td>
-                            </tr>
+                            <li>
+                                <i class="fa fa-edit '.$icolor.'"></i>
+                                <div class="timeline-item">
+                                    <span class="time '.$icolor.'"><i class="fa fa-clock-o"></i> '; echo date("d M Y H:i", strtotime($review->tanggal)); echo '</span>
+                                    <h3 class="timeline-header"><a>'.$user->nama_lengkap.'</a></h3>
+                                    <div class="timeline-body">
+                                        '; echo nl2br($review->isi_review); echo '
+                                    </div>
+                                    <div class="timeline-footer">
+                                        <a href="control/berirating.php?rating=like&idmakul='.$id_makul.'&idreview='.$id_review.'" class="btn btn-success btn-sm" title="Membantu"><i class="fa fa-thumbs-o-up"> '.$review->membantu.'</i></a>
+                                        <a href="control/berirating.php?rating=dislike&idmakul='.$id_makul.'&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Tidak Membantu"><i class="fa fa-thumbs-o-down"> '.$review->tidak_membantu.'</i></a>
+                                    </div>
+                                </div>
+                            </li>
                         ';
                     }
-                    echo '</table>';
+                    echo '</ul>';
                 }
                 echo '
                         </div>
