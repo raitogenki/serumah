@@ -1,9 +1,10 @@
 <?php 
     session_start();
-    if(!isset($_GET['idmakul'])){
+    if(!isset($_GET['idmakul']) || !isset($_GET['col'])){
         header('Location: index.php');
     }else{
         $id_makul = $_GET['idmakul'];
+        $col = $_GET['col'];
     }
 ?>
 
@@ -21,8 +22,6 @@
       <section class="content">
         <?php
             require 'control/database.php';
-            $colors = array('bg-red', 'bg-yellow', 'bg-aqua', 'bg-blue', 'bg-light-blue', 'bg-green', 'bg-navy', 'bg-teal',
-                'bg-olive', 'bg-lime', 'bg-orange', 'bg-fuchsia', 'bg-purple', 'bg-maroon', 'bg-black');
             $query_makul = mysqli_query($mysqli, "SELECT * FROM `makul` WHERE id_makul='$id_makul'");
             while($makul = $query_makul->fetch_object()){		 
                 echo '
@@ -31,7 +30,7 @@
                             <h3 class="box-title">Informasi Mata Kuliah</h3>
                         </div>
                         <div class="box-body">
-                            <div class="col-lg-12 col-xs-12 '.$colors[array_rand($colors)].'" style="display:table; height:240px;">
+                            <div class="col-lg-12 col-xs-12 '.$col.'" style="display:table; height:240px;">
                                 <div style="display:table-cell; text-align:center; vertical-align:middle;">
                                     <h1 style="font-size:72px">'.strtoupper($makul->nama_makul).'</h1>
                                 </div>
@@ -91,19 +90,25 @@
                         $id_review = $review->id_review;
                         $query_pereview = mysqli_query($mysqli, "SELECT * FROM `user` WHERE id_user='$review->id_user'");
                         $user = $query_pereview->fetch_object();
-                        $icolor = $colors[array_rand($colors)];
+                        $colors = array('bg-red', 'bg-yellow', 'bg-aqua', 'bg-blue', 'bg-light-blue', 'bg-green', 'bg-navy',
+                            'bg-teal', 'bg-olive', 'bg-orange', 'bg-purple', 'bg-maroon',);
+                        $color = $colors[array_rand($colors)];
+                        $toggle = '';
+                        if(isset($_SESSION['user']) && $_SESSION['user'] == $user->username){
+                            $toggle = 'disabled';
+                        }
                         echo '
                             <li>
-                                <i class="fa fa-edit '.$icolor.'"></i>
+                                <i class="fa fa-edit '.$color.'"></i>
                                 <div class="timeline-item">
-                                    <span class="time '.$icolor.'"><i class="fa fa-clock-o"></i> '; echo date("d M Y H:i", strtotime($review->tanggal)); echo '</span>
+                                    <span class="time '.$color.'"><i class="fa fa-clock-o"></i> '; echo date("d M Y H:i", strtotime($review->tanggal)); echo '</span>
                                     <h3 class="timeline-header"><a>'.$user->nama_lengkap.'</a></h3>
                                     <div class="timeline-body">
                                         '; echo nl2br($review->isi_review); echo '
                                     </div>
                                     <div class="timeline-footer">
-                                        <a href="control/berirating.php?rating=like&idmakul='.$id_makul.'&idreview='.$id_review.'" class="btn btn-success btn-sm" title="Membantu"><i class="fa fa-thumbs-o-up"> '.$review->membantu.'</i></a>
-                                        <a href="control/berirating.php?rating=dislike&idmakul='.$id_makul.'&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Tidak Membantu"><i class="fa fa-thumbs-o-down"> '.$review->tidak_membantu.'</i></a>
+                                        <a href="control/berirating.php?rating=like&idmakul='.$id_makul.'&col='.$col.'&idreview='.$id_review.'" class="btn btn-success btn-sm '.$toggle.'" title="Membantu"><i class="fa fa-thumbs-o-up"> '.$review->membantu.'</i></a>
+                                        <a href="control/berirating.php?rating=dislike&idmakul='.$id_makul.'&col='.$col.'&idreview='.$id_review.'" class="btn btn-danger btn-sm '.$toggle.'" title="Tidak Membantu"><i class="fa fa-thumbs-o-down"> '.$review->tidak_membantu.'</i></a>
                                     </div>
                                 </div>
                             </li>

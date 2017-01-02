@@ -15,11 +15,11 @@
 		}
 		$query = mysqli_query($mysqli, "SELECT * FROM `$tabel` WHERE username = '$username'");
 		if(mysqli_num_rows($query) == 0) {
-			echo "<script> alert('Login gagal, username tidak terdaftar!'); window.location.href='../login.php';</script>";
+			echo "<script> alert('Gagal masuk, username tidak terdaftar!'); window.location.href='../login.php';</script>";
 		} else {
 			$query = mysqli_query($mysqli, "SELECT * FROM `$tabel` WHERE username = '$username' AND password = '$password'");
 			if(mysqli_num_rows($query) == 0) {
-				echo "<script> alert('Login gagal, password yang dimasukkan salah!'); window.location.href='../login.php';</script>";
+				echo "<script> alert('Gagal masuk, password yang dimasukkan salah!'); window.location.href='../login.php';</script>";
 			}else{
 				if($type == 0){
 					$_SESSION['admin'] = $username;

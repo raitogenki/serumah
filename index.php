@@ -29,18 +29,18 @@
           <div class="box-body">
           <?php 
             require 'control/database.php';
-            $colors = array('bg-blue', 'bg-red', 'bg-green', 'bg-yellow', 'bg-navy', 'bg-purple', 'bg-aqua', 'bg-maroon', 'bg-black');
+            $colors = array('bg-light-blue', 'bg-red', 'bg-olive', 'bg-yellow', 'bg-navy', 'bg-purple', 'bg-aqua', 'bg-maroon');
             $query = mysqli_query($mysqli, "SELECT * FROM `makul` ORDER BY diperbarui DESC LIMIT 8");
             $i = 0;
             while($makul = $query->fetch_object()){		 
                 echo '
                     <div class="col-lg-3 col-xs-6">
-                      <div class="small-box '.$colors[$i++].'">
+                      <div class="small-box '.$colors[$i].'">
                         <div class="inner">
                           <h5>'.$makul->nama_makul.'</h5>
                           <h5>Semester '.$makul->semester.'</h5>
                         </div>
-                        <a href="makul.php?idmakul='.$makul->id_makul.'" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="makul.php?idmakul='.$makul->id_makul.'&col='.$colors[$i++].'" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                 ';    

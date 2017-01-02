@@ -16,8 +16,10 @@
       </section>
       <section class="content">
         <?php
+            $cboxs = array('box-primary', 'box-danger', 'box-success', 'box-warning', 'box-info');
+            $tipe = 0; $c = 0;
             for($i = 1; $i <= 8; $i++){
-                $tipe = 0;
+                if($i == 6){ $c = 0; }
                 require 'layout/makultipe.php';
             }	 	
         ?>

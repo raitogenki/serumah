@@ -1,8 +1,8 @@
 <?php
     require 'control/database.php';
     echo '
-        <div class="box box-solid">
-                <div class="box-header with-border">
+        <div class="box '.$cboxs[$c++].'">
+                <div class="box-header">
                     <h3 class="box-title">Semester '.$i.'</h3>
                     <div class="pull-right box-tools">
                         <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip">
