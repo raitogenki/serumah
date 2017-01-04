@@ -54,7 +54,7 @@
                 }
                 if(isset($_SESSION['admin'])){
                     echo '
-                        <li><a href="daftarrequest.php"><i class="fa fa-user"></i><span>Daftar Request</span></a></li>
+                        <li><a href="daftarkonfirmasi.php"><i class="fa fa-user"></i><span>Daftar Konfirmasi Review</span></a></li>
                         <li><a href="control/logout.php"><i class="fa fa-arrow-left"></i><span>Logout</span></a></li>
                     ';
                 }elseif(isset($_SESSION['user'])){
@@ -64,7 +64,6 @@
                     ';
                 }else{
                     echo '
-                        <!--li><a href="#"><i class="fa fa-book"></i><span>Tentang Serumah</span></a></li-->
                         <li><a href="login.php"><i class="fa fa-arrow-right"></i><span>Login</span></a></li>
                     ';
                 }

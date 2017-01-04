@@ -92,7 +92,7 @@
                                                             <div class="modal-body">
                                                                 <div class="form-group">
                                                                     <input type="hidden" name="idreview" value="'.$id_review.'">
-                                                                    <textarea type="text" name="isireview" class="form-control" rows="14">'.$review->isi_review.'</textarea>
+                                                                    <textarea type="text" name="isireview" class="form-control" rows="14" required>'.$review->isi_review.'</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">

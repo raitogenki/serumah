@@ -23,7 +23,7 @@
 			}else{
 				if($type == 0){
 					$_SESSION['admin'] = $username;
-					header("Location: ../index.php");
+					header("Location: ../daftarkonfirmasi.php");
 				}else{
 					$_SESSION['user'] = $username;
 					$user = $query->fetch_object();

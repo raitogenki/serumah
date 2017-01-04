@@ -17,10 +17,10 @@
             <a href="index.php"><b>Serumah</b>-IF UNS</a>
         </div>
         <div class="login-box-body">
-            <p class="login-box-msg">Masukkan username dan password anda</p>
+            <p class="login-box-msg">Masukkan Username/NIM dan password anda</p>
             <form action="control/ceklogin.php" method="post">
                 <div class="form-group has-feedback">
-                    <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" name="username" class="form-control" placeholder="Username/NIM" required autofocus>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">

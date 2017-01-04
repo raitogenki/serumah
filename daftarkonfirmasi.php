@@ -19,7 +19,7 @@
         <section class="content">
             <div class="box box-solid">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Daftar Request</h3>
+                    <h3 class="box-title">Daftar Konfirmasi Review</h3>
                 </div>
                 <div class="box-body">
                     <?php
@@ -55,8 +55,8 @@
                                 echo '
                                         <td>
                                             <a href="#lihat'.$id_review.'" class="btn btn-info btn-sm" data-toggle="modal" title="Lihat"><i class="fa fa-eye"> </i></a>
-                                            <a href="control/kelolarequest.php?opsi=terima&idreview='.$id_review.'&idmakul='.$id_makul.'" class="btn btn-success btn-sm" title="Terima"><i class="fa fa-check"> </i></a>
-                                            <a href="control/kelolarequest.php?opsi=tolak&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Tolak"><i class="fa fa-close"> </i></a>
+                                            <a href="control/kelolakonfirmasi.php?opsi=terima&idreview='.$id_review.'&idmakul='.$id_makul.'" class="btn btn-success btn-sm" title="Terima"><i class="fa fa-check"> </i></a>
+                                            <a href="control/kelolakonfirmasi.php?opsi=tolak&idreview='.$id_review.'" class="btn btn-danger btn-sm" title="Tolak"><i class="fa fa-close"> </i></a>
 
                                             <div class="modal fade" id="lihat'.$id_review.'">
                                                 <div class="modal-dialog">

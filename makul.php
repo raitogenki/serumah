@@ -62,12 +62,12 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <input type="hidden" name="idmakul" value="'.$id_makul.'">
-                                                    <textarea type="text" name="isireview" class="form-control" rows="14" placeholder="Tulis review ..."></textarea>
+                                                    <textarea type="text" name="isireview" class="form-control" rows="14" placeholder="Tulis review ..." required></textarea>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-                                                <button type="submit" name="tambah" class="btn btn-primary">Request Review</button>
+                                                <button type="submit" name="tambah" class="btn btn-primary">Selesai</button>
                                             </div>
                                         </form>
                                     </div>	

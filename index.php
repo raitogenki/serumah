@@ -1,7 +1,7 @@
 <?php 
   session_start();
   if(isset($_SESSION['admin'])){
-    header('Location: daftarrequest.php');
+    header('Location: daftarkonfirmasi.php');
 	} 
 ?>
 
